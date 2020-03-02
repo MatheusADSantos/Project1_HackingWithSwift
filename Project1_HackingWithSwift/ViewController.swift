@@ -21,6 +21,8 @@ class ViewController: UITableViewController {
         let fileManager = FileManager.default
         let path = Bundle.main.resourcePath!
         let items = try! fileManager.contentsOfDirectory(atPath: path)
+        
+        
         print("fileManager -> ",fileManager)
         print("path -> ",path,"\n\n")
         
@@ -41,10 +43,14 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         cell.textLabel?.text = pictures[indexPath.row]
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
+        cell.accessoryType = .checkmark
+        print(indexPath.row)
         if let vc = storyboard?.instantiateViewController(identifier: "Detail") as? DetailViewController {
             vc.selectedImage = pictures[indexPath.row]
             if let navigationController = navigationController {
